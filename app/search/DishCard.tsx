@@ -1,7 +1,10 @@
 'use client';
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import Swipeable from 'react-tinder-card';
+const Swipeable = dynamic(() => import('react-tinder-card'), {
+  ssr: false
+});
 
 const processSwipe = (cb: Function) => {
   cb(true);
