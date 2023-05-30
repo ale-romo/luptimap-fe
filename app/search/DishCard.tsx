@@ -6,10 +6,6 @@ const Swipeable = dynamic(() => import('react-tinder-card'), {
   ssr: false
 });
 
-const processSwipe = (cb: Function) => {
-  cb(true);
-}
-
 interface Dish {
   id: string;
   place: string;
@@ -19,8 +15,13 @@ interface Dish {
 }
 
 const DishCard = ({place, location, image, cb}: Dish) => {
+
+  const processSwipe = (direction: string) => {
+    cb(direction);
+  }
+
   return <Swipeable
-    onCardLeftScreen={() => processSwipe(cb)}
+    onCardLeftScreen={processSwipe}
     className="h-full text-white font-bold text-4xl absolute top-0 left-0 w-full"
   >
     <div

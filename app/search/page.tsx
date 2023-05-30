@@ -31,27 +31,28 @@ const Search = () => {
   const [dishes, setDishes] = useState(initialDishes.reverse());
 
   const getMoreDishes = () => {
-    const moreDishes = [
-      {
-        id: '4',
-        place: 'Luptico3',
-        location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
-        description: 'Comidita rica',
-        image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
-      },
-      {
-        id: '5',
-        place: 'Luptico4',
-        location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
-        description: 'Comidita rica',
-        image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
-      },
-    ];
-    setDishes([...dishes, ...moreDishes]);
-    console.log(dishes);
+    // const moreDishes = [
+    //   {
+    //     id: '4',
+    //     place: 'Luptico3',
+    //     location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
+    //     description: 'Comidita rica',
+    //     image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
+    //   },
+    //   {
+    //     id: '5',
+    //     place: 'Luptico4',
+    //     location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
+    //     description: 'Comidita rica',
+    //     image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
+    //   },
+    // ];
+    // setDishes([...dishes, ...moreDishes]);
+    // console.log(dishes);
   }
 
-  const updateDishes = () => {
+  const updateDishes = (direction: string) => {
+    console.log(direction)
     // dishes.pop();
     // if (dishes.length < 2) getMoreDishes();
   };
