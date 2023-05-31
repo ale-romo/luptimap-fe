@@ -1,60 +1,50 @@
-'use client';
-import {useState } from 'react';
 import Image from 'next/image';
 import DishCard from './DishCard';
 
-const initialDishes = [
-  {
-    id: '1',
-    place: 'Luptico',
-    location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
-    description: 'Comidita rica',
-    image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
-  },
-  {
-    id: '2',
-    place: 'Luptico2',
-    location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
-    description: 'Comidita rica',
-    image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
-  },
-  {
-    id: '3',
-    place: 'Luptico3',
-    location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
-    description: 'Comidita rica',
-    image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
-  },
-];
+// const dishes = [
+//   {
+//     id: '1',
+//     caption: 'Luptico',
+//     location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
+//     description: 'Comidita rica',
+//     secure_url: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
+//   },
+//   {
+//     id: '2',
+//     caption: 'Luptico2',
+//     location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
+//     description: 'Comidita rica',
+//     secure_url: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
+//   },
+//   {
+//     id: '3',
+//     caption: 'Luptico3',
+//     location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
+//     description: 'Comidita rica',
+//     secure_url: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
+//   },
+// ];
+const getData = async () => {
+  const res = await fetch('https://api.luptico.com/.netlify/functions/images');
 
-const Search = () => {
-  const [dishes, setDishes] = useState(initialDishes.reverse());
-
-  const getMoreDishes = () => {
-    // const moreDishes = [
-    //   {
-    //     id: '4',
-    //     place: 'Luptico3',
-    //     location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
-    //     description: 'Comidita rica',
-    //     image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
-    //   },
-    //   {
-    //     id: '5',
-    //     place: 'Luptico4',
-    //     location: 'https://www.google.com/maps/place/Luptico/@32.0283518,-116.6329344,17z/data=!4m14!1m7!3m6!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!2sLuptico!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d!3m5!1s0x80d8ef67deb1d7c5:0x6d974c150ea65365!8m2!3d32.0283518!4d-116.6329344!16s%2Fg%2F11s764rb3d?hl=en',
-    //     description: 'Comidita rica',
-    //     image: 'https://www.comedera.com/wp-content/uploads/2022/08/Ceviche-de-camarones-ecuatoriano-shutterstock_1997166494.jpg',
-    //   },
-    // ];
-    // setDishes([...dishes, ...moreDishes]);
-    // console.log(dishes);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
   }
 
+  return res.json();
+}
+
+const Search = async () => {
+  const data = await getData();
+  const dishes = data.Items.map((item: any) => {
+    return {
+      image: item.secure_url,
+      caption: item.caption,
+    }
+  });
+  console.log(dishes)
   const updateDishes = (direction: string) => {
     console.log(direction)
-    // dishes.pop();
-    // if (dishes.length < 2) getMoreDishes();
   };
 
   return <div className="h-full relative overflow-hidden w-full">
@@ -64,8 +54,10 @@ const Search = () => {
       </h3>
       <Image src="/icons/sad.svg" alt="" aria-hidden width={100} height={100} />
     </div>
-    {dishes.length && dishes.map((dish, i) => {
-      return <DishCard key={i} {...dish} cb={updateDishes}/>
+    {dishes.length && dishes.map((dish:any, i: number) => {
+      // return <div className="absolute top-0" key={i}>{dish.caption}, {dish.secure_url}</div>
+      //return <DishCard key={i} {...dish} cb={updateDishes}/>
+      return <DishCard key={i} {...dish} />
     })}
   </div>
 }
