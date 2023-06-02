@@ -1,10 +1,31 @@
 'use client';
-import { useEffect } from 'react';
-import dynamic from "next/dynamic";
+
 import { getUserId } from "./Session";
-const Swipeable = dynamic(() => import('react-tinder-card'), {
-  ssr: false
-});
+import Swipeable from 'react-tinder-card';
+
+interface Swipe {
+  uuid: string;
+  id: string;
+  swipe:boolean;
+}
+
+async function postJSON(data: Swipe) {
+  try {
+    const response = await fetch('https://api.luptico.com/.netlify/functions/swipe', {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    console.log("Success:", result);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 
 interface Dish {
   postId: string;
@@ -14,9 +35,17 @@ interface Dish {
 
 const DishCard = ({ postId, caption, image}: Dish) => {
 
-  const processSwipe = (direction: string) => {
+  const processSwipe = async (direction: string) => {
     const userId = getUserId();
-
+    if (userId) {
+      const data = {
+        uuid: userId,
+        id: postId,
+        swipe: Boolean(direction === 'right')
+      }
+      const confirm = await postJSON(data);
+      console.log(confirm);
+    }
     console.log(`${direction}, ${userId}, ${postId}`);
   }
 
