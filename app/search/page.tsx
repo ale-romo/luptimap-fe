@@ -1,22 +1,31 @@
 "use client";
 
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
-import TinderCard from 'react-tinder-card';
-import { v4 as uuidv4 } from 'uuid';
+
+const TinderCard = dynamic(() => import('react-tinder-card'), { ssr: false });
 
 import { getImages, saveSwipe } from '../../support/lambda'
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+  .replace(/[xy]/g, function (c) {
+      const r = Math.random() * 16 | 0, 
+          v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+  });
+}
 
 export default function Page() {
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
-
-  const user_uuid = localStorage.getItem('@lup_uuid') ? localStorage.getItem('@lup_uuid') as string: uuidv4()
+  const [user, setUser] = useState('')
+  
  
   const fetchImages = async () => {
     setLoading(true)
-    const response = await getImages(user_uuid);
+    const response = await getImages(user);
 
     const data = response.map((item: any) => ({
         post_id: item.id,
@@ -28,16 +37,32 @@ export default function Page() {
     setLoading(false)
   }
 
+  const setUserHelper = () => {
+    const stored = localStorage.getItem('@lup_uuid')
+    
+    if (!stored) {
+      localStorage.setItem('@lup_uuid', uuidv4())
+    }
+
+    setUser(localStorage.getItem('@lup_uuid') as string)
+  }
+
   const swipe = async (post_id:string, direction: string, index: number) => {
     if (index === 0) {
       fetchImages()
     }
 
-    await saveSwipe(post_id, direction, user_uuid)
+    await saveSwipe(post_id, direction, user)
   }
 
   useEffect(() => {
-    fetchImages()
+    if (user) {
+      fetchImages()
+    }
+  }, [user])
+
+  useEffect(() => {
+    setUserHelper()
   }, [])
 
   if (loading) {
