@@ -12,7 +12,7 @@ export default function Page() {
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const user_uuid = localStorage.getItem('UUID') ? localStorage.getItem('UUID') : uuidv4()
+  const user_uuid = localStorage.getItem('@lup_uuid') ? localStorage.getItem('@lup_uuid') as string: uuidv4()
  
   const fetchImages = async () => {
     setLoading(true)
