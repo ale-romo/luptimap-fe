@@ -28,9 +28,9 @@ export default function Page() {
     const response = await getImages(user);
 
     const data = response.map((item: any) => ({
-        post_id: item.id,
-        image: item.secure_url,
-        caption: item.caption,
+        post_id: item.id.S,
+        image: item.secure_url.S,
+        caption: item.caption.S,
       }))
 
     setImages(data)
