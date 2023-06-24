@@ -10,7 +10,7 @@ function createFolder() {
 
   try {
     if (!fs.existsSync(`${folderName}/.aws`)) {
-      fs.mkdirSync(folderName);
+      fs.mkdirSync(`${folderName}/.aws`);
     }
   } catch (err) {
     console.error(err);
