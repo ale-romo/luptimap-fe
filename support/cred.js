@@ -2,10 +2,12 @@ const fs = require("fs");
 
 require("dotenv").config();
 
-const folderName = ".aws";
+const folderName = "/opt/build/repo/aws";
 
 function createFolder() {
   console.log("creating folder");
+  console.log(process.cwd())
+  console.log(__dirname);
 
   try {
     if (!fs.existsSync(folderName)) {
