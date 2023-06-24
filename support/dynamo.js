@@ -13,7 +13,7 @@ const awsParams = {
 
 const documentClient = new DynamoDBClient({
   region: "us-east-1",
-  credentials: awsParams
+  credentials: awsParams,
 });
 
 const loggerInfo = async (msg) => {
@@ -53,10 +53,18 @@ module.exports.saveSwipe = async (post_id, user_uuid, swipe) => {
 
   const command = new PutItemCommand({
     Item: {
-      post_id,
-      swipe,
-      user_uuid,
-      created_at: new Date().getTime(),
+      post_id: {
+        S: post_id,
+      },
+      user_uuid: {
+        S: user_uuid,
+      },
+      swipe: {
+        S: swipe,
+      },
+      created_at: {
+        N: new Date().getTime(),
+      },
     },
     TableName: "instagram_swipe",
   });
