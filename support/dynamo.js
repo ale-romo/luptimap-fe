@@ -1,34 +1,24 @@
-const { fromProcess } = require("@aws-sdk/credential-providers"); // CommonJS import
 const {
   DynamoDBClient,
   ScanCommand,
   PutItemCommand,
 } = require("@aws-sdk/client-dynamodb");
 
-const loggerInfo = async (msg) => {
-  console.log(`dynamo: ${msg}`);
+require("dotenv").config();
+
+const awsParams = {
+  accessKeyId: process.env.MY_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY,
 };
-
-const credentials = fromProcess({
-  // Optional. The path to the shared credentials file. If not specified, the provider will use
-  // the value in the `AWS_SHARED_CREDENTIALS_FILE` environment variable or a default of
-  // `~/.aws/credentials`.
-  filepath: "/opt/build/repo/.aws/credentials",
-  // Optional. The path to the shared config file. If not specified, the provider will use the
-  // value in the `AWS_CONFIG_FILE` environment variable or a default of `~/.aws/config`.
-  configFilepath: "/opt/build/repo/.aws/config",
-})
-
-console.log('perron', credentials)
-
-const client = new FooClient({
-  credentials,
-});
 
 const documentClient = new DynamoDBClient({
   region: "us-east-1",
-  credentialDefaultProvider: client
+  credentials: awsParams
 });
+
+const loggerInfo = async (msg) => {
+  console.log(`dynamo: ${msg}`);
+};
 
 module.exports.getPostClassified = async (id, taken_at_timestamp) => {
   const params = {
