@@ -20,12 +20,12 @@ function uuidv4() {
 export default function Page() {
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState('')
+  const [user_uuid, setUserUUID] = useState('')
   
  
   const fetchImages = async () => {
     setLoading(true)
-    const response = await getImages(user);
+    const response = await getImages(user_uuid);
 
     const data = response.map((item: any) => ({
         post_id: item.id.S,
@@ -44,22 +44,22 @@ export default function Page() {
       localStorage.setItem('@lup_uuid', uuidv4())
     }
 
-    setUser(localStorage.getItem('@lup_uuid') as string)
+    setUserUUID(localStorage.getItem('@lup_uuid') as string)
   }
 
-  const swipe = async (post_id:string, direction: string, index: number) => {
+  const swipeHandler = async (post_id:string, swipe: string, index: number) => {
     if (index === 0) {
       fetchImages()
     }
 
-    await saveSwipe(post_id, direction, user)
+    await saveSwipe(post_id, user_uuid, swipe)
   }
 
   useEffect(() => {
-    if (user) {
+    if (user_uuid) {
       fetchImages()
     }
-  }, [user])
+  }, [user_uuid])
 
   useEffect(() => {
     setUserHelper()
@@ -82,7 +82,7 @@ export default function Page() {
     <div>
       {images.map((dish:any, i: number) => (<TinderCard
         key={dish.post_id}
-        onSwipe={(direction: string) => swipe(dish.post_id, direction, i)}
+        onSwipe={(direction: string) => swipeHandler(dish.post_id, direction, i)}
         className="h-full absolute top-0 left-0 w-full rounded-lg overflow-hidden"
       >
         <div

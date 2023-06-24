@@ -6,7 +6,8 @@ export const getImages = async (user_uuid:string) => {
   return images.Items
 }
 
-export const saveSwipe = async (post_id:string, direction: string, user_uuid:string) => {
+export const saveSwipe = async (post_id:string, user_uuid:string, swipe:string) => {
+
   await fetch('/.netlify/functions/swipe', {
     method: "POST",
     headers: {
@@ -14,8 +15,8 @@ export const saveSwipe = async (post_id:string, direction: string, user_uuid:str
     },
     body: JSON.stringify({
       post_id,
-      direction,
-      user_uuid
+      user_uuid,
+      swipe,
     }),
   });
 }
