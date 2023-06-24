@@ -25,14 +25,6 @@ function saveCred() {
   } catch (err) {
     console.error(err);
   }
-
-  const content2 = `AWS_ACCESS_KEY_ID=${process.env.MY_AWS_ACCESS_KEY_ID}\nAWS_SECRET_ACCESS_KEY=${process.env.MY_AWS_SECRET_ACCESS_KEY}`;
-
-  try {
-    fs.writeFileSync(`${folderName}/.env`, content2);
-  } catch (err) {
-    console.error(err);
-  }
 }
 
 async function main() {
