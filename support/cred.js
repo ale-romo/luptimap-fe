@@ -2,15 +2,14 @@ const fs = require("fs");
 
 require("dotenv").config();
 
-const folderName = "/opt/build/repo/aws";
+const folderName = process.cwd();
 
 function createFolder() {
   console.log("creating folder");
-  console.log(process.cwd())
-  console.log(__dirname);
+  console.log(folderName)
 
   try {
-    if (!fs.existsSync(folderName)) {
+    if (!fs.existsSync(`${folderName}/.aws`)) {
       fs.mkdirSync(folderName);
     }
   } catch (err) {
@@ -22,7 +21,15 @@ function saveCred() {
   const content = `aws_access_key_id=${process.env.MY_AWS_ACCESS_KEY_ID}\naws_secret_access_key=${process.env.MY_AWS_SECRET_ACCESS_KEY}`;
 
   try {
-    fs.writeFileSync(`${folderName}/credentials`, content);
+    fs.writeFileSync(`${folderName}/.aws/credentials`, content);
+  } catch (err) {
+    console.error(err);
+  }
+
+  const content2 = `AWS_ACCESS_KEY_ID=${process.env.MY_AWS_ACCESS_KEY_ID}\nAWS_SECRET_ACCESS_KEY=${process.env.MY_AWS_SECRET_ACCESS_KEY}`;
+
+  try {
+    fs.writeFileSync(`${folderName}/.env`, content2);
   } catch (err) {
     console.error(err);
   }
