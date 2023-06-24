@@ -3,15 +3,24 @@ const { saveSwipe } = require("../../support/dynamo");
 exports.handler = async function (event, _context) {
   console.log(JSON.stringify(event, null, 2));
   if (event.httpMethod === "POST") {
-    const { post_id, user_uuid, swipe } = event.multiValueQueryStringParameters;
-    console.log({ post_id, user_uuid, swipe });
-    if (!post_id?.length || !user_uuid?.length || !swipe?.length) {
+    let body;
+    try {
+      body = JSON.parse(event.body);
+    } catch (error) {
       return {
         statusCode: 400,
       };
     }
 
-    await saveSwipe(post_id[0], user_uuid[0], swipe[0]);
+    console.log("body", body);
+    const { post_id, user_uuid, swipe } = body;
+    if (!post_id || !user_uuid || !swipe) {
+      return {
+        statusCode: 400,
+      };
+    }
+
+    await saveSwipe(post_id, user_uuid, swipe);
 
     return {
       statusCode: 200,
