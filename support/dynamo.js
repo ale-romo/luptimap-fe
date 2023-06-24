@@ -63,7 +63,7 @@ module.exports.saveSwipe = async (post_id, user_uuid, swipe) => {
         S: swipe,
       },
       created_at: {
-        N: new Date().getTime(),
+        S: new Date().getTime(),
       },
     },
     TableName: "instagram_swipe",
