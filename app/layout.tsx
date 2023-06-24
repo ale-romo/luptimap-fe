@@ -29,7 +29,6 @@ export default function RootLayout({
             <ul>
               <li className="flex py-5 justify-around items-center">
                 <Link href="/profile"><Image src="/icons/profile.svg" alt="profile" width="40" height="40"/></Link>
-                <Link href="/search"><Image src="/icons/search.svg" alt="search" width="40" height="40"/></Link>
                 <Link href="/likes"><Image src="/icons/likes.svg" alt="likes" width="40" height="40" /></Link>
               </li>
             </ul>
